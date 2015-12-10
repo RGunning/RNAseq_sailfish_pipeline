@@ -1,12 +1,12 @@
 bl6fix.once
-	prog="/nfs/users/nfs_r/rg12/lustre110/Pipeline/Sailfish/software/fasta_name_strip";
+	prog="/warehouse/team113_wh01/rg12/Pipelines/RNAseq_sailfish_pipeline/software/fasta_name_strip";
 	sailfishdir=([% jobs.datasource.Sailfish %]);
 	${prog} -i ${sailfishdir[0]}/../transcriptomes/Mus_musculus.GRCm38.cdna.all.ERCC.fa -o [% bl6fix.file %]
 
 
 castfix.once
 	sailfishdir=([% jobs.datasource.Sailfish %]);
-	prog="/nfs/users/nfs_r/rg12/lustre110/Pipeline/Sailfish/software/fasta_name_strip";
+	prog="/warehouse/team113_wh01/rg12/Pipelines/RNAseq_sailfish_pipeline/software/fasta_name_strip";
 	${prog} -i ${sailfishdir[0]}/../transcriptomes/CASTEiJ_transcriptome70.ercc.fa -o [% castfix.file %]
 
 
@@ -95,18 +95,18 @@ sailfishtranscriptome.output libFormatCounts.txt  libParams  logs  quant_bias_co
 #tgm.mem 200
 
 de.once
-	prog="/nfs/users/nfs_r/rg12/lustre110/Pipeline/Sailfish/software/DEanalysis";
+	prog="/warehouse/team113_wh01/rg12/Pipelines/RNAseq_sailfish_pipeline/software/DEanalysis";
 	Rscript ${prog} --inputfiles [% jobs.sailfishtranscriptome.quant_bias_corrected.genes.sf %] --sex [% jobs.datasource.Sex %] --strain [% jobs.datasource.Strain %] --cell [% jobs.datasource.Cell %] --fastq [% jobs.datasource.fastq %] --filenames [% jobs.datasource.Filename %]
 de.mem 5000
 de.output Bexpressed.txt Texpressed.txt B0expressed.txt T0expressed.txt B1-100expressed.txt T1-100expressed.txt B100expressed.txt T100expressed.txt
 
 symlink.once . /nfs/users/nfs_r/rg12/.bashrc;
 	runnum=$(echo "[% de.output1 %]" |sed -r 's/.*run([0-9]+).*/\1/');
-	plite symlink -f Info -r $runnum -s de#Bexpressed.txt /lustre/scratch110/sanger/rg12/Pipeline/Sailfish/;
-	plite symlink -f Info -r $runnum -s de#Texpressed.txt /lustre/scratch110/sanger/rg12/Pipeline/Sailfish/;
-	plite symlink -f Info -r $runnum -s de#B0expressed.txt /lustre/scratch110/sanger/rg12/Pipeline/Sailfish/;
-	plite symlink -f Info -r $runnum -s de#T0expressed.txt /lustre/scratch110/sanger/rg12/Pipeline/Sailfish/;
-	plite symlink -f Info -r $runnum -s de#B1-100expressed.txt /lustre/scratch110/sanger/rg12/Pipeline/Sailfish/;
-	plite symlink -f Info -r $runnum -s de#T1-100expressed.txt /lustre/scratch110/sanger/rg12/Pipeline/Sailfish/;
-	plite symlink -f Info -r $runnum -s de#B100expressed.txt /lustre/scratch110/sanger/rg12/Pipeline/Sailfish/;
-	plite symlink -f Info -r $runnum -s de#T100expressed.txt /lustre/scratch110/sanger/rg12/Pipeline/Sailfish/;
+	plite symlink -f Info -r $runnum -s de#Bexpressed.txt /warehouse/team113_wh01/rg12/Pipelines/RNAseq_sailfish_pipeline/;
+	plite symlink -f Info -r $runnum -s de#Texpressed.txt /warehouse/team113_wh01/rg12/Pipelines/RNAseq_sailfish_pipeline/;
+	plite symlink -f Info -r $runnum -s de#B0expressed.txt /warehouse/team113_wh01/rg12/Pipelines/RNAseq_sailfish_pipeline/;
+	plite symlink -f Info -r $runnum -s de#T0expressed.txt /warehouse/team113_wh01/rg12/Pipelines/RNAseq_sailfish_pipeline/;
+	plite symlink -f Info -r $runnum -s de#B1-100expressed.txt /warehouse/team113_wh01/rg12/Pipelines/RNAseq_sailfish_pipeline/;
+	plite symlink -f Info -r $runnum -s de#T1-100expressed.txt /warehouse/team113_wh01/rg12/Pipelines/RNAseq_sailfish_pipeline/;
+	plite symlink -f Info -r $runnum -s de#B100expressed.txt /warehouse/team113_wh01/rg12/Pipelines/RNAseq_sailfish_pipeline/;
+	plite symlink -f Info -r $runnum -s de#T100expressed.txt /warehouse/team113_wh01/rg12/Pipelines/RNAseq_sailfish_pipeline/;

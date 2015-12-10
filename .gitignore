@@ -4,4 +4,4 @@ output/run*/job*/
 *.preparse.yaml*
 *.yaml
 *.log.conf
-
+._*
